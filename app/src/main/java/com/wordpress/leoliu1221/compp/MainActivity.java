@@ -567,9 +567,8 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback {
      * Capture one or series of raw images. with specific settings.
      */
     public void captureRAW() {
-        //TODO:hw2
         //Set different capture numbers, but no larger than the buffer size (defaults to 51)
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < rawCaptureBuffer.getMaxImages(); i++) {
             //sleep the system clock for 200 ms
             SystemClock.sleep(200);
             if (mCaptureSession != null) {
@@ -584,15 +583,16 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback {
                     //Set different gains
                     //Gains = k* Sensitivity (true)
                     //TODO: getting range of sensitivities supported using SENSOR_INFO_SENSITIVITY_RANGE:
-                    Range<Integer> sstt = characteristics.get(null);
+                    Range<Integer> sstt = characteristics.get(CameraCharacteristics.SENSOR_INFO_SENSITIVITY_RANGE);
 
                     //TODO:getting lower and higher sensitivity
-                    Integer lower_sstt = 0;
-                    Integer higher_sstt = 0;
+                    Integer lower_sstt = sstt.getLower();
+                    Integer higher_sstt = sstt.getUpper();
                     Log.e(TAG, "lowersstt " + lower_sstt);
                     Log.e(TAG, "highersstt " + higher_sstt);
                     //TODO:Change the capture request's sensitivity
-                    requester.set(CaptureRequest.SENSOR_SENSITIVITY, 0);
+                    // First to lower_sstt then to higher_sstt.
+                    requester.set(CaptureRequest.SENSOR_SENSITIVITY, lower_sstt);
                     try {
                         // This handler can be null because we aren't actually attaching any callback
                         rawChars.add(getCharacteristics());
