@@ -567,6 +567,8 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback {
      * Capture one or series of raw images. with specific settings.
      */
     public void captureRAW() {
+        SystemClock.sleep(1000);
+
         //Set different capture numbers, but no larger than the buffer size (defaults to 51)
         for (int i = 0; i < rawCaptureBuffer.getMaxImages(); i++) {
             //sleep the system clock for 200 ms
@@ -578,6 +580,7 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback {
                             mCameraDevice.createCaptureRequest(mCameraDevice.TEMPLATE_STILL_CAPTURE);
                     requester.addTarget(rawCaptureBuffer.getSurface());
                     requester.setTag(mRequestCounter.getAndIncrement());
+
 
                     //TODO:hw2
                     //Set different gains
@@ -592,7 +595,8 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback {
                     Log.e(TAG, "highersstt " + higher_sstt);
                     //TODO:Change the capture request's sensitivity
                     // First to lower_sstt then to higher_sstt.
-                    requester.set(CaptureRequest.SENSOR_SENSITIVITY, lower_sstt);
+                    requester.set(CaptureRequest.SENSOR_SENSITIVITY, higher_sstt);
+//                    requester.set(CaptureRequest.SENSOR_SENSITIVITY, higher_sstt);
                     try {
                         // This handler can be null because we aren't actually attaching any callback
                         rawChars.add(getCharacteristics());
