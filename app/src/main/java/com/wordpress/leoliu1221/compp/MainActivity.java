@@ -175,10 +175,12 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback {
                     }
                 }, 200);
 
+                final int transparent_color = 0x00000000;
+                final Drawable f_transparent_color = new ColorDrawable(transparent_color);
                 //set the foreground to be transparent with 400 ms delay
                 handler.postDelayed(new Runnable() {
                     public void run() {
-                        main_frame.setForeground(null);
+                        main_frame.setForeground(f_transparent_color);
                         //TODO: (hw 3) take picture as jpg
                         captureJPEG();
                     }
