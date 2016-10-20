@@ -324,8 +324,6 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback {
             Log.e(TAG, "raw sizes:" + Arrays.toString(rawSizes));
             Size rawSize = rawSizes[rawSizes.length - 1];
             Log.e(TAG, "raw size: " + rawSize.toString());
-            //TODO:hw2
-            //TODO: change the # as needed.
             rawCaptureBuffer = ImageReader.newInstance(rawSize.getWidth(), rawSize.getHeight(), ImageFormat.RAW_SENSOR, 51/* #of captures allowed */);
             rawCaptureBuffer.setOnImageAvailableListener(mRawCaptureListener, mBackgroundHandler);
             manager.openCamera(cameraId, mStateCallback, mForegroundHandler);
@@ -582,18 +580,14 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback {
                     requester.setTag(mRequestCounter.getAndIncrement());
 
 
-                    //TODO:hw2
                     //Set different gains
                     //Gains = k* Sensitivity (true)
-                    //TODO: getting range of sensitivities supported using SENSOR_INFO_SENSITIVITY_RANGE:
                     Range<Integer> sstt = characteristics.get(CameraCharacteristics.SENSOR_INFO_SENSITIVITY_RANGE);
 
-                    //TODO:getting lower and higher sensitivity
                     Integer lower_sstt = sstt.getLower();
                     Integer higher_sstt = sstt.getUpper();
                     Log.e(TAG, "lowersstt " + lower_sstt);
                     Log.e(TAG, "highersstt " + higher_sstt);
-                    //TODO:Change the capture request's sensitivity
                     // First to lower_sstt then to higher_sstt.
                     requester.set(CaptureRequest.SENSOR_SENSITIVITY, higher_sstt);
 //                    requester.set(CaptureRequest.SENSOR_SENSITIVITY, higher_sstt);
