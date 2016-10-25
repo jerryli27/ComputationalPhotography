@@ -145,6 +145,8 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback {
             @Override
             public void onClick(View v) {
                 Log.e(TAG, "clicked flash/noflash Capture. ");
+                SystemClock.sleep(1000);
+
                 //TODO:hw3
                 //Set the black color code
                 //Basic Steps:
