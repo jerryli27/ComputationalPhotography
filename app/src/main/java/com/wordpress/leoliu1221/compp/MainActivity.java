@@ -151,6 +151,7 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback {
                 //1. set the foreground of whole screen to black, snap a picture
                 //2. set the foreground of whole screen to white, snap a picture after 200 ms delay
                 //3. set the foreground to be transparent (null) after 400 ms delay
+                SystemClock.sleep(1000);
 
                 //TODO:  (hw 3) set the foreground to be black
                 final int black_color = 0xFF000000;

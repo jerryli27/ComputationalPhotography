@@ -3,21 +3,21 @@
 
     <item
         is-multidex="true"
-        jar="/Users/feelmyears/Documents/School/16th Grade/Fall Quarter/EECS 395/ComputationalPhotography/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jar="C:\Users\Jerry\Google Drive\Northwestern\EECS 395 Computational Photography\backbone\backbone\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="23.0.1"
-        sha1="215ce6badc2524491acde55fbca2b125023f15ec">
-        <dex dex="/Users/feelmyears/Documents/School/16th Grade/Fall Quarter/EECS 395/ComputationalPhotography/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_5aa6ace9a1905682bbf1911c5684ff7401975e96/classes.dex" />
+        sha1="c8f4939a9712b0dc0a2774b141c13b32d5a02330">
+        <dex dex="C:\Users\Jerry\Google Drive\Northwestern\EECS 395 Computational Photography\backbone\backbone\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_36bc141be9b67e02a2c2bcac0b5849f64e28dffa\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/Users/feelmyears/Documents/School/16th Grade/Fall Quarter/EECS 395/ComputationalPhotography/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jar="C:\Users\Jerry\Google Drive\Northwestern\EECS 395 Computational Photography\backbone\backbone\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="true"
         revision="23.0.1"
-        sha1="90bfa39078f247dc4e501c0937ed13dfc9b455b3">
-        <dex dex="/Users/feelmyears/Documents/School/16th Grade/Fall Quarter/EECS 395/ComputationalPhotography/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_294beb3fac05979d4df95a262dd84aa303879f3c/classes.dex" />
+        sha1="1faee3cb19ba0286db97af843ba20ed3a95fed8a">
+        <dex dex="C:\Users\Jerry\Google Drive\Northwestern\EECS 395 Computational Photography\backbone\backbone\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_b48b90f26fd07a3fd349eee36db387622711ed71\classes.dex" />
     </item>
 
 </items>
