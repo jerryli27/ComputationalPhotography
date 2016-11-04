@@ -147,32 +147,27 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback {
                 Log.e(TAG, "clicked flash/noflash Capture. ");
                 SystemClock.sleep(1000);
 
-                //TODO:hw3
                 //Set the black color code
                 //Basic Steps:
                 //1. set the foreground of whole screen to black, snap a picture
                 //2. set the foreground of whole screen to white, snap a picture after 200 ms delay
                 //3. set the foreground to be transparent (null) after 400 ms delay
 
-                //TODO:  (hw 3) set the foreground to be black
                 final int black_color = 0xFF000000;
                 final Drawable f_black_color = new ColorDrawable(black_color);
                 main_frame.setForeground(f_black_color);
                 Log.e(TAG, "setting black color");
 
-                //TODO:  (hw 3) take picture as jpg
                 captureJPEG();
 
                 final int white_color = 0xFFFFFFFF;
                 final Drawable f_white_color = new ColorDrawable(white_color);
 
-                //TODO: (hw 3) set the foreground to be white with 200 ms delay
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     public void run() {
                         Log.e(TAG, "setting white color");
                         main_frame.setForeground(f_white_color);
-                        //TODO: (hw 3) take picture as jpg
                         captureJPEG();
                     }
                 }, 200);
@@ -183,7 +178,6 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback {
                 handler.postDelayed(new Runnable() {
                     public void run() {
                         main_frame.setForeground(f_transparent_color);
-                        //TODO: (hw 3) take picture as jpg
                         captureJPEG();
                     }
                 }, 400);
@@ -301,7 +295,6 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback {
                     .get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
 
             // Bigger is better when it comes to saving our image
-            // TODO:hw3
             // changing largestSize to be a different one if you want.
             // you can simply say largestSize = map.getOutputSizes(ImageFormat.JPEG)[#] where # cannot be greater than length of all available output sizes.
             Size largestSize = Collections.max(
@@ -695,23 +688,23 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback {
         //TODO:hw4
         //TODO: Getting min and max exposures.
         Range<Long> exposureRange = characteristics.get(CameraCharacteristics.SENSOR_INFO_EXPOSURE_TIME_RANGE);
-        Long minimumExposure = 0L;
-        Long maximumExposure = 0L;
+        Long minimumExposure = exposureRange.getLower();
+        Long maximumExposure = exposureRange.getUpper();
         Log.e(TAG, "minimumExposure: " + minimumExposure);
         Log.e(TAG, "maximumExposure: " + maximumExposure);
         Long prevExposure = minimumExposure;
         //check if 2* exposure >maximumExposure
-        while (prevExposure + prevExposure < 0) {
+        while (prevExposure + prevExposure < maximumExposure) {
             try {
                 //sleep the system for 20ms between each capture.
                 SystemClock.sleep(20);
                 Log.e(TAG, "exposure: " + prevExposure);
                 //TODO:update exposure time
-                prevExposure = 0+prevExposure;
+                prevExposure += prevExposure;
                 //create capture requester
                 CaptureRequest.Builder requester = mCameraDevice.createCaptureRequest(mCameraDevice.TEMPLATE_MANUAL);
                 //TODO: set requester exposure time
-                requester.set(null, prevExposure);
+                requester.set(CaptureRequest.SENSOR_EXPOSURE_TIME, prevExposure);
                 //add surface
                 requester.addTarget(mCaptureBuffer.getSurface());
                 Log.e(TAG, "exposure: " + prevExposure);
