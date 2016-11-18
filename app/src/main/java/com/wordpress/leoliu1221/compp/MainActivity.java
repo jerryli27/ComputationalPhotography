@@ -613,35 +613,35 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback {
     public void captureFocalStack(View v) {
         //TODO:hw5
         //getting min and max focusdistance
-        float minimumLens = characteristics.get(null);
-        float maximumLens = characteristics.get(null);
+        float minimumLens = characteristics.get(CameraCharacteristics.LENS_INFO_MINIMUM_FOCUS_DISTANCE);
+        float maximumLens = characteristics.get(CameraCharacteristics.LENS_INFO_HYPERFOCAL_DISTANCE);
         Log.e(TAG, "minimumLens: " + minimumLens);
         Log.e(TAG, "maxmimumLens: " + maximumLens);
         //TODO:hw5
         //setting previous lens to be min or max focus distance. (guess which one it is!)
-        float prev_focus = maximumLens;
+        float prev_focus = minimumLens;
         Log.e(TAG, "in captureFocalStack");
         //check if capture session is null
         if (mCaptureSession != null) {
             Log.e(TAG, "prevLens: " + prev_focus);
             //TODO: check if focus distance after changing is in range
-            while (prev_focus * 1.5 < 0) {
+            while (prev_focus * 1.5 < maximumLens) {
                 //sleep system clock for 20 ms
                 SystemClock.sleep(20);
                 Log.e(TAG, "in captureFocalStack while loop");
                 try {
                     //TODO: set current focus to be 1.5 * previous focus
-                    float curr_focus = 0;
+                    float curr_focus = (float)(prev_focus * 1.5);
                     focuses.add(curr_focus);
                     //build requester
                     CaptureRequest.Builder requester =
                             mCameraDevice.createCaptureRequest(mCameraDevice.TEMPLATE_MANUAL);
                     //TODO: turn off auto focus mode for requester
-                    requester.set(CaptureRequest.CONTROL_AF_MODE, null);
+                    requester.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_OFF);
                     //add surface as target in requester
                     requester.addTarget(mCaptureBuffer.getSurface());
                     //TODO: set current focus to requester
-                    requester.set(null, curr_focus);
+                    requester.set(CaptureRequest.LENS_FOCUS_DISTANCE, curr_focus);
                     //set previous focus = current focus
                     prev_focus = curr_focus;
                     try {
