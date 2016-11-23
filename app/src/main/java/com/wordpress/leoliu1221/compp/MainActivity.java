@@ -346,7 +346,7 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback {
                         mBackgroundHandler.post(new CapturedImageSaver(activity, reader.acquireLatestImage(), null, null,exposures.remove().toString()+".jpg"/*filename*/));
                     }
                     else if(focuses.size()>0){
-                        mBackgroundHandler.post(new CapturedImageSaver(activity,reader.acquireLatestImage(),null,null,focuses.remove().toString()+".jpg"));
+                        mBackgroundHandler.post(new CapturedImageSaver(activity,reader.acquireLatestImage(),null, null,focuses.remove().toString()+".jpg"));
                     }
                     else {
                         mBackgroundHandler.post(new CapturedImageSaver(activity, reader.acquireLatestImage(), null, null, null/*filename*/));
@@ -613,36 +613,41 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback {
     public void captureFocalStack(View v) {
         //TODO:hw5
         //getting min and max focusdistance
-        float minimumLens = characteristics.get(CameraCharacteristics.LENS_INFO_MINIMUM_FOCUS_DISTANCE);
-        float maximumLens = characteristics.get(CameraCharacteristics.LENS_INFO_HYPERFOCAL_DISTANCE);
+        float maximumLens = characteristics.get(CameraCharacteristics.LENS_INFO_MINIMUM_FOCUS_DISTANCE);
+        float minimumLens = characteristics.get(CameraCharacteristics.LENS_INFO_HYPERFOCAL_DISTANCE);
         Log.e(TAG, "minimumLens: " + minimumLens);
         Log.e(TAG, "maxmimumLens: " + maximumLens);
         //TODO:hw5
         //setting previous lens to be min or max focus distance. (guess which one it is!)
+
+        float focus_step =(maximumLens - minimumLens)/((float)30.0);
+
         float prev_focus = minimumLens;
         Log.e(TAG, "in captureFocalStack");
         //check if capture session is null
         if (mCaptureSession != null) {
             Log.e(TAG, "prevLens: " + prev_focus);
             //TODO: check if focus distance after changing is in range
-            while (prev_focus * 1.5 < maximumLens) {
+            while (prev_focus + focus_step < maximumLens) {
+//            while (prev_focus * 1.5 < maximumLens) {
                 //sleep system clock for 20 ms
                 SystemClock.sleep(20);
                 Log.e(TAG, "in captureFocalStack while loop");
                 try {
                     //TODO: set current focus to be 1.5 * previous focus
-                    float curr_focus = (float)(prev_focus * 1.5);
+//                    float curr_focus = (float)(prev_focus * 1.5);
+                    float curr_focus = prev_focus + focus_step;
                     focuses.add(curr_focus);
                     //build requester
                     CaptureRequest.Builder requester =
-                            mCameraDevice.createCaptureRequest(mCameraDevice.TEMPLATE_MANUAL);
+                            mCameraDevice.createCaptureRequest(mCameraDevice.TEMPLATE_STILL_CAPTURE);
                     //TODO: turn off auto focus mode for requester
                     requester.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_OFF);
                     //add surface as target in requester
                     requester.addTarget(mCaptureBuffer.getSurface());
                     //TODO: set current focus to requester
                     requester.set(CaptureRequest.LENS_FOCUS_DISTANCE, curr_focus);
-                    //set previous focus = current focus
+                    //set previous focus = current focus5
                     prev_focus = curr_focus;
                     try {
                         // This handler can be null because we aren't actually attaching any callback
@@ -691,6 +696,7 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback {
         Range<Long> exposureRange = characteristics.get(CameraCharacteristics.SENSOR_INFO_EXPOSURE_TIME_RANGE);
         Long minimumExposure = exposureRange.getLower();
         Long maximumExposure = exposureRange.getUpper();
+
         Log.e(TAG, "minimumExposure: " + minimumExposure);
         Log.e(TAG, "maximumExposure: " + maximumExposure);
         Long prevExposure = minimumExposure;
